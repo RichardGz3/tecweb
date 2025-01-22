@@ -11,3 +11,5 @@
 
 **Periodo :** Primavera 2025
 
+
+**Descripcion :** Repositorio local que me sirva para almacenar y entregar todas mis practicas y proyectos del curso
