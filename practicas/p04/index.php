@@ -6,8 +6,8 @@
 </head>
 <body>
     <h2>Ejercicio 1</h2>
-    <p>Determina cuál de las siguientes variables son válidas y explica por qué:</p>
-    <p>$_myvar,  $_7var,  myvar,  $myvar,  $var7,  $_element1, $house*5</p>
+    <p>Determina cuál de las siguientes variables son válidas y explica por qué: </p>
+    <p>$_myvar,  $_7var,  myvar,  $myvar,  $var7,  $_element1, $house*5 </p>
     <?php
         //AQUI VA MI CÓDIGO PHP
         $_myvar;
@@ -18,7 +18,7 @@
         $_element1;
         //$house*5;     // Invalida
         
-        echo '<h4>Respuesta:</h4>';   
+        echo '<h3>Respuesta:</h3>';   
     
         echo '<ul>';
         echo '<li>$_myvar es válida porque inicia con guión bajo.</li>';
@@ -29,6 +29,7 @@
         echo '<li>$_element1 es válida porque inicia con guión bajo.</li>';
         echo '<li>$house*5 es inválida porque el símbolo * no está permitido.</li>';
         echo '</ul>';
+
     ?>
 </body>
 </html>
