@@ -61,6 +61,14 @@
         echo "b: " . $GLOBALS['b'] . "<br>";
         echo "c: " . $GLOBALS['c'] . "<br>";
         echo "z: "; print_r($GLOBALS['z']); echo "<br>";
+
+        // Ejercicio 5
+        echo "<h3>Ejercicio 5: Conversion de tipos</h3>";
+        $a = "7 personas";
+        $b = (integer) $a;
+        $a = "9E3";
+        $c = (double) $a;
+        echo "a: $a, b: $b, c: $c <br>";
     ?>
 </body>
 </html>
