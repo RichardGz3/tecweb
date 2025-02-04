@@ -69,6 +69,24 @@
         $a = "9E3";
         $c = (double) $a;
         echo "a: $a, b: $b, c: $c <br>";
+
+        // Ejercicio 6
+        echo "<h3>Ejercicio 6: Booleanos</h3>";
+        $a = "0";
+        $b = "TRUE";
+        $c = FALSE;
+        $d = ($a OR $b);
+        $e = ($a AND $c);
+        $f = ($a XOR $b);
+        var_dump($a, $b, $c, $d, $e, $f);
+        echo "<br>";
+        echo "<br>";
+        echo "Booleano visible: ".(int)$c." ".(int)$e."<br>";
+
+        echo "<br>";
+
+        
+        
     ?>
 </body>
 </html>
