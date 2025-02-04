@@ -30,6 +30,19 @@
         echo '<li>$house*5 es inválida porque el símbolo * no está permitido.</li>';
         echo '</ul>';
 
+        // Ejercicio 2: Asignación de valores y referencias
+        echo "<h3>Ejercicio 2: Referencias</h3>";
+        $a = "ManejadorSQL";
+        $b = 'MySQL';
+        $c = &$a;
+        echo "a: $a, b: $b, c: $c <br>";
+        $a = "PHP server";
+        $b = &$a;
+        echo "a: $a, b: $b, c: $c <br>";
+
+        echo "<p>Descripción:</p>";
+        echo "<p>En el segundo bloque de asignaciones, se cambia el valor de \$a a 'PHP server', y luego \$b se convierte en una referencia a \$a. Como \$c ya era una referencia a \$a, también cambia su valor.</p>";
+
     ?>
 </body>
 </html>
