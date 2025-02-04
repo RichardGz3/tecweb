@@ -54,6 +54,13 @@
         $z[0] = "MySQL";
         print_r(["a" => $a, "b" => $b, "c" => $c, "z" => $z]);
         
+        // Ejercicio 4
+        echo "<h3>Ejercicio 4: Uso de GLOBALS</h3>";
+        global $a, $b, $c, $z;
+        echo "a: " . $GLOBALS['a'] . "<br>";
+        echo "b: " . $GLOBALS['b'] . "<br>";
+        echo "c: " . $GLOBALS['c'] . "<br>";
+        echo "z: "; print_r($GLOBALS['z']); echo "<br>";
     ?>
 </body>
 </html>
