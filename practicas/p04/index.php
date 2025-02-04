@@ -85,7 +85,11 @@
 
         echo "<br>";
 
-        
+        // Ejercicio 7
+        echo "<h3>Ejercicio 7: Uso de \$_SERVER</h3>";
+        echo "Versión de Apache/PHP: ".$_SERVER['SERVER_SOFTWARE']."<br>";
+        echo "Sistema Operativo del servidor: ".PHP_OS."<br>";
+        echo "Idioma del navegador: ".$_SERVER['HTTP_ACCEPT_LANGUAGE']."<br>";
         
     ?>
 </body>
