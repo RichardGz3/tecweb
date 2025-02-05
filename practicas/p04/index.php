@@ -46,14 +46,34 @@
         // Ejercicio 3
         echo "<h3>Ejercicio 3: Evolución de Variables</h3>";
         $a = "PHP5";
-        $z[] = &$a;
-        $b = "5a version de PHP";
-        @$c = $b * 10;
-        $a .= $b;
-        @$b *= $c;
-        $z[0] = "MySQL";
-        print_r(["a" => $a, "b" => $b, "c" => $c, "z" => $z]);
+        echo "\$a = $a <br>";
         
+        $z[] = &$a;
+        echo "\$z = ";
+        print_r($z);
+        echo "<br>";
+        
+        $b = "5a version de PHP";
+        echo "\$b = $b";
+        echo "<br>";
+
+        @$c = $b * 10;
+        echo "\$c = $c";
+        echo "<br>";
+
+        $a .= $b;
+        echo "\$a = $a";
+        echo "<br>";
+        
+        @$b *= $c;
+        echo "\$b = $b";
+        echo "<br>";
+
+        $z[0] = "MySQL";
+        echo "\$z = ";
+        print_r($z);
+        echo "<br>";
+
         // Ejercicio 4
         echo "<h3>Ejercicio 4: Uso de GLOBALS</h3>";
         global $a, $b, $c, $z;
