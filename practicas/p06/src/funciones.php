@@ -14,10 +14,45 @@
     ?>
 
 <?php
-        if(isset($_POST["name"]) && isset($_POST["email"]))
-        {
-            echo $_POST["name"];
-            echo '<br>';
-            echo $_POST["email"];
+function Secuencia($max_iteraciones = 4) {
+    $matriz = [];
+    $iteraciones = 0;
+    $totalNumeros = 0;
+
+    while (true) {
+        $fila = [];
+        
+        // Generar un numero impar
+        do {
+            $num1 = rand(1, 999);
+        } while ($num1 % 2 == 0);
+
+        // Generar un numero par
+        do {
+            $num2 = rand(1, 999);
+        } while ($num2 % 2 != 0);
+
+        // Generar otro numero impar
+        do {
+            $num3 = rand(1, 999);
+        } while ($num3 % 2 == 0);
+
+        // Agregar la secuencia a la matriz
+        $fila = [$num1, $num2, $num3];
+        $matriz[] = $fila;
+        $iteraciones++;
+        $totalNumeros += 3;
+
+        // Salir después de cierta cantidad de intentos
+        if ($iteraciones >= $max_iteraciones) {
+            break;
         }
-    ?>
+    }
+
+    return [
+        'matriz' => $matriz,
+        'iteraciones' => $iteraciones,
+        'totalNumeros' => $totalNumeros
+    ];
+}
+?>
