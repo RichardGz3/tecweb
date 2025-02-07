@@ -56,3 +56,27 @@ function Secuencia($max_iteraciones = 4) {
     ];
 }
 ?>
+
+<?php
+if (isset($_GET['multiplo'])) {
+    $multiplo = $_GET['multiplo'];
+    
+    function encontrarMultiploWhile($multiplo) {
+        while (true) {
+            $num = rand(1, 1000);
+            if ($num % $multiplo == 0) {
+                return $num;
+            }
+        }
+    }
+    
+    function encontrarMultiploDoWhile($multiplo) {
+        do {
+            $num = rand(1, 1000);
+        } while ($num % $multiplo != 0);
+        
+        return $num;
+    }
+}
+?>
+

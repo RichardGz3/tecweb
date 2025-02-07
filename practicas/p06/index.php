@@ -36,7 +36,19 @@
     
     <p><?php echo "$totalNumeros números obtenidos en $iteraciones iteraciones."; ?></p>
 
+    <h2>Ejercicio 3</h2>
+    <p>Utiliza un ciclo while para encontrar el primer número entero obtenido aleatoriamente, pero que además sea múltiplo de un número dado.</p>
+    <form method="GET">
+        <label for="multiplo">Ingrese un número:</label>
+        <input type="number" name="multiplo" required>
+        <button type="submit">Buscar</button>
+    </form>
     
+    <?php if (isset($multiplo)) : ?>
+        <h3>Resultados:</h3>
+        <p>Primer múltiplo encontrado con while: <strong><?php echo encontrarMultiploWhile($multiplo); ?></strong></p>
+        <p>Primer múltiplo encontrado con do-while: <strong><?php echo encontrarMultiploDoWhile($multiplo); ?></strong></p>
+    <?php endif; ?>
 
 </body>
 </html>
