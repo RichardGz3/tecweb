@@ -80,3 +80,13 @@ if (isset($_GET['multiplo'])) {
 }
 ?>
 
+<?php
+function generarArregloASCII() {
+    $arreglo = [];
+    for ($i = 97; $i <= 122; $i++) {
+        $arreglo[$i] = chr($i);
+    }
+    return $arreglo;
+}
+?>
+

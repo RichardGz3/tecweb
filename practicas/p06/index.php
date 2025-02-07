@@ -49,6 +49,28 @@
         <p>Primer múltiplo encontrado con while: <strong><?php echo encontrarMultiploWhile($multiplo); ?></strong></p>
         <p>Primer múltiplo encontrado con do-while: <strong><?php echo encontrarMultiploDoWhile($multiplo); ?></strong></p>
     <?php endif; ?>
+    
+    <h2>Ejercicio 4</h2>
+    <p>Crear un arreglo cuyos índices van de 97 a 122 y cuyos valores son las letras de la ‘a’ a la ‘z’. Usa la función chr(n) que devuelve el caracter cuyo código ASCII es n para poner el valor en cada índice.</p>
+
+    <?php 
+        $arreglo = generarArregloASCII();
+    ?>
+
+    <table border="1">
+        <tr>
+            <th>Índice ASCII</th>
+            <th>Carácter</th>
+        </tr>
+        <?php foreach ($arreglo as $key => $value) : ?>
+            <tr>
+                <td><?php echo $key; ?></td>
+                <td><?php echo $value; ?></td>
+            </tr>
+        <?php endforeach; ?>
+    </table>
+
+    
 
 </body>
 </html>
