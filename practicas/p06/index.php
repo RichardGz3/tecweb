@@ -71,7 +71,7 @@
     </table>
 
     <h2>Ejercicio 5</h2>
-    <p>Identificar si una persona cumple con el criterio de edad y sexo.</p>
+    <p>Usar las variables $edad y $sexo en una instrucción if para identificar una persona de sexo “femenino”, cuya edad oscile entre los 18 y 35 años y mostrar un mensaje de bienvenida apropiado.</p>
     <form action="src/funciones.php" method="POST">
         <label for="edad">Ingrese su edad:</label>
         <input type="number" name="edad" required>
@@ -84,6 +84,34 @@
         <br>
         <button type="submit">Verificar</button>
     </form>
+
+    <h2>Ejercicio 6: Parque Vehicular</h2>
+    <p>Crea en código duro un arreglo asociativo que sirva para registrar el parque vehicular de una ciudad. Cada vehículo debe ser identificado por:</p>
+
+    <form method="GET">
+        <label for="matricula">Ingrese la matrícula del auto:</label>
+        <input type="text" name="matricula" placeholder="Ejemplo: ABC1234">
+        <button type="submit">Buscar</button>
+    </form>
+
+    <form method="GET">
+        <button type="submit" name="todos" value="1">Mostrar todos los autos</button>
+    </form>
+
+    <?php
+
+    if (isset($_GET['matricula']) && !empty($_GET['matricula'])) {
+        $matricula = strtoupper(trim($_GET['matricula']));
+        $resultado = buscarAutoPorMatricula($matricula);
+        echo "<pre>";
+        print_r($resultado);
+        echo "</pre>";
+    } elseif (isset($_GET['todos'])) {
+        echo "<pre>";
+        print_r(obtenerTodosLosAutos());
+        echo "</pre>";
+    }
+    ?>
 
 </body>
 </html>
