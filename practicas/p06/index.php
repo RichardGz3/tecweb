@@ -70,7 +70,20 @@
         <?php endforeach; ?>
     </table>
 
-    
+    <h2>Ejercicio 5</h2>
+    <p>Identificar si una persona cumple con el criterio de edad y sexo.</p>
+    <form action="src/funciones.php" method="POST">
+        <label for="edad">Ingrese su edad:</label>
+        <input type="number" name="edad" required>
+        <br>
+        <label for="sexo">Seleccione su sexo:</label>
+        <select name="sexo" required>
+            <option value="masculino">Masculino</option>
+            <option value="femenino">Femenino</option>
+        </select>
+        <br>
+        <button type="submit">Verificar</button>
+    </form>
 
 </body>
 </html>

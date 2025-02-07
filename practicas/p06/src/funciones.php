@@ -90,3 +90,15 @@ function generarArregloASCII() {
 }
 ?>
 
+<?php
+if ($_SERVER["REQUEST_METHOD"] == "POST") {
+    $edad = $_POST['edad'];
+    $sexo = $_POST['sexo'];
+    
+    if ($sexo == "femenino" && $edad >= 18 && $edad <= 35) {
+        echo "<h3>Bienvenida, usted está en el rango de edad permitido.</h3>";
+    } else {
+        echo "<h3>Lo sentimos, no cumple con los requisitos.</h3>";
+    }
+}
+?>
