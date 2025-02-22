@@ -86,4 +86,3 @@ function mostrarResumen($nombre, $marca, $modelo, $precio, $detalles, $unidades,
     echo "</ul>";
 }
 ?>
-
