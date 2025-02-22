@@ -8,7 +8,7 @@ $unidades = intval($_POST['unidades'] ?? 0);
 $imagen   = $_FILES['imagen']['name'] ?? '';
 
 /** Ruta de imagen por defecto */
-$ruta_imagen = 'imagenes/imagen.png';
+$ruta_imagen = 'img/imagen.png';
 
 /** Validación de datos */
 if (empty($nombre) || empty($marca) || empty($modelo)) {
@@ -38,7 +38,7 @@ $stmt->close();
 
 /** Subir imagen si se proporciona */
 if (!empty($_FILES['imagen']['tmp_name'])) {
-    $directorio = 'imagenes/';
+    $directorio = 'img/';
     
     /** Crear la carpeta si no existe */
     if (!is_dir($directorio)) {
@@ -74,16 +74,16 @@ function mostrarMensaje($mensaje) {
 
 /** Función para mostrar el resumen del producto */
 function mostrarResumen($nombre, $marca, $modelo, $precio, $detalles, $unidades, $imagen) {
-    echo " <h2>Producto Insertado Correctamente</h2> ";
-    echo " <ul> ";
-    echo " <li><strong>Nombre:</strong> $nombre</li> ";
-    echo " <li><strong>Marca:</strong> $marca</li> ";
-    echo " <li><strong>Modelo:</strong> $modelo</li> ";
-    echo " <li><strong>Precio:</strong> $precio</li> ";
-    echo " <li><strong>Detalles:</strong> $detalles</li> ";
-    echo " <li><strong>Unidades:</strong> $unidades</li> ";
-    echo " <li><strong>Imagen:</strong><br><img src='$imagen' width='150' alt='Imagen del producto'></li> ";
-    echo " </ul> ";
+    echo "<h2>Producto Insertado Correctamente</h2>";
+    echo "<ul>";
+    echo "<li><strong>Nombre:</strong> $nombre</li>";
+    echo "<li><strong>Marca:</strong> $marca</li>";
+    echo "<li><strong>Modelo:</strong> $modelo</li>";
+    echo "<li><strong>Precio:</strong> $precio</li>";
+    echo "<li><strong>Detalles:</strong> $detalles</li>";
+    echo "<li><strong>Unidades:</strong> $unidades</li>";
+    echo "<li><strong>Imagen:</strong><br><img src='$imagen' width='150' alt='Imagen del producto'></li>";
+    echo "</ul>";
 }
 ?>
 
