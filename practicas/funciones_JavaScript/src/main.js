@@ -116,3 +116,72 @@ function ejemplo9() {
             alert('Color no reconocido. Intenta con rojo, verde o azul.');
     }
 }
+
+function ejemplo10() {
+    var x = 1;
+    var resultado = "";
+    while (x <= 100) {
+        resultado += x + "<br>";
+        x = x + 1;
+    }
+    document.getElementById('resultado10').innerHTML = resultado;
+}
+
+function ejemplo11() {
+    var x = 1;
+    var suma = 0;
+    var resultado = "";
+    
+    while (x <= 5) {
+        var valor = prompt('Ingresa el valor:', '');
+        valor = parseInt(valor);
+        suma = suma + valor;
+        x = x + 1;
+    }
+    
+    resultado = "<h3>La suma de los valores es " + suma + "</h3>";
+    document.getElementById('resultado11').innerHTML = resultado;
+}
+
+function ejemplo12() {
+    var resultado = "";
+    var valor;
+    
+    do {
+        valor = prompt('Ingresa un valor entre 0 y 999:', '');
+        valor = parseInt(valor);
+        
+        if (valor !== 0) {
+            resultado += "El valor " + valor + " tiene ";
+            if (valor < 10) {
+                resultado += "1 dígito";
+            } else if (valor < 100) {
+                resultado += "2 dígitos";
+            } else {
+                resultado += "3 dígitos";
+            }
+            resultado += "<br>";
+        }
+    } while (valor !== 0);
+    
+    document.getElementById('resultado12').innerHTML = resultado;
+}
+
+function ejemplo13() {
+    var resultado = "";
+    
+    for (var f = 1; f <= 10; f++) {
+        resultado += f + " ";
+    }
+    
+    document.getElementById('resultado13').innerHTML = "<h3>" + resultado + "</h3>";
+}
+
+function ejemplo14() {
+    var resultado = "";
+    for (var i = 0; i < 3; i++) {
+        resultado += "Cuidado<br>Ingresa tu documento correctamente<br>";
+    }
+    document.getElementById('resultado14').innerHTML = resultado;
+}
+
