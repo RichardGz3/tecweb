@@ -1,5 +1,7 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN" "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN"
+"http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="es">
+
 <?php
 if(isset($_GET['tope']))
     $tope = $_GET['tope'];
@@ -28,14 +30,15 @@ if (!empty($tope))
 }
 ?>
 <head>
-    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <meta http-equiv="Content-Type" content="application/xhtml+xml; charset=UTF-8" />
     <title>Productos</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" />
 </head>
 <body>
     <h3>PRODUCTOS DISPONIBLES</h3>
-    <br/>
     
+    <p></p>
+
     <?php if(!empty($productos)) : ?>
         <table class="table">
             <thead class="thead-dark">
@@ -53,14 +56,16 @@ if (!empty($tope))
             <tbody>
                 <?php foreach($productos as $producto) : ?>
                     <tr>
-                        <th scope="row"><?= $producto['id'] ?></th>
-                        <td><?= $producto['nombre'] ?></td>
-                        <td><?= $producto['marca'] ?></td>
-                        <td><?= $producto['modelo'] ?></td>
-                        <td><?= $producto['precio'] ?></td>
-                        <td><?= $producto['unidades'] ?></td>
-                        <td><?= $producto['detalles'] ?></td>
-                        <td><img src="<?= $producto['imagen'] ?>" width="100" /></td>
+                        <th scope="row"><?php echo $producto['id']; ?></th>
+                        <td><?php echo $producto['nombre']; ?></td>
+                        <td><?php echo $producto['marca']; ?></td>
+                        <td><?php echo $producto['modelo']; ?></td>
+                        <td><?php echo $producto['precio']; ?></td>
+                        <td><?php echo $producto['unidades']; ?></td>
+                        <td><?php echo $producto['detalles']; ?></td>
+                        <td>
+                            <img src="<?php echo $producto['imagen']; ?>" width="100" alt="Imagen del producto" />
+                        </td>
                     </tr>
                 <?php endforeach; ?>
             </tbody>
@@ -70,3 +75,4 @@ if (!empty($tope))
     <?php endif; ?>
 </body>
 </html>
+
