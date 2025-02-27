@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="utf-8">
+    <title>Registro de Productos</title>
+    <style>
+        ol, ul { list-style-type: none; }
+        #imagenDefault {
+            width: 150px;
+            height: 150px;
+            object-fit: cover;
+            border: 1px solid #ccc;
+            display: block;
+            margin-top: 10px;
+        }
+    </style>
+</head>
+<body>
+    <h1>Registro de Nuevos Productos</h1>
+    
+    <form id="formularioProductos" action="set_producto_v2.php" method="post" enctype="multipart/form-data">
+        <fieldset>
+            <legend>Información del Producto</legend>
+            <ul>
+                <li>
+                    <label for="nombre">Nombre del Producto:</label>
+                    <input type="text" name="nombre" id="nombre" required>
+                </li>
+                <li>
+                    <label for="marca">Marca:</label>
+                    <select name="marca" id="marca" required>
+                        <option value="">Selecciona una marca</option>
+                        <option value="Apple">Apple</option>
+                        <option value="Samsung">Samsung</option>
+                        <option value="Sony">Sony</option>
+                        <option value="Xiaomi">Xiaomi</option>
+                        <option value="Otro">Otro</option>
+                    </select>
+                </li>
+                <li>
+                    <label for="modelo">Modelo:</label>
+                    <input type="text" name="modelo" id="modelo" required>
+                </li>
+                <li>
+                    <label for="precio">Precio:</label>
+                    <input type="number" name="precio" id="precio" step="0.01" required>
+                </li>
+                <li>
+                    <label for="detalles">Detalles:</label><br>
+                    <textarea name="detalles" rows="4" cols="60" id="detalles" placeholder="Describe brevemente el producto"></textarea>
+                </li>
+                <li>
+                    <label for="unidades">Unidades en Stock:</label>
+                    <input type="number" name="unidades" id="unidades" required>
+                </li>
+                <li>
+                    <label for="imagen">Imagen del Producto:</label>
+                    <input type="file" name="imagen" id="imagen" accept="image/*">
+                    <img id="imagenDefault" src="src/cat.png" alt="Imagen por defecto">
+                </li>
+            </ul>
+        </fieldset>
+    
+        <p>
+            <input type="submit" value="Registrar Producto">
+            <input type="reset" value="Limpiar Formulario">
+        </p>
+    </form>
+
+    <script src="validaciones.js"></script>
+</body>
+</html>
