@@ -61,29 +61,45 @@ function buscarID(e) {
 }
 
 // FUNCIÓN CALLBACK DE BOTÓN "Agregar Producto"
-function agregarProducto(e) {
-    e.preventDefault();
+function agregarProducto(event) {
+    event.preventDefault();
 
-    // SE OBTIENE DESDE EL FORMULARIO EL JSON A ENVIAR
-    var productoJsonString = document.getElementById('description').value;
-    // SE CONVIERTE EL JSON DE STRING A OBJETO
-    var finalJSON = JSON.parse(productoJsonString);
-    // SE AGREGA AL JSON EL NOMBRE DEL PRODUCTO
-    finalJSON['nombre'] = document.getElementById('name').value;
-    // SE OBTIENE EL STRING DEL JSON FINAL
-    productoJsonString = JSON.stringify(finalJSON,null,2);
+    let nombre = document.getElementById("name").value.trim();
+    let jsonText = document.getElementById("description").value.trim();
 
-    // SE CREA EL OBJETO DE CONEXIÓN ASÍNCRONA AL SERVIDOR
-    var client = getXMLHttpRequest();
-    client.open('POST', './backend/create.php', true);
-    client.setRequestHeader('Content-Type', "application/json;charset=UTF-8");
-    client.onreadystatechange = function () {
-        // SE VERIFICA SI LA RESPUESTA ESTÁ LISTA Y FUE SATISFACTORIA
-        if (client.readyState == 4 && client.status == 200) {
-            console.log(client.responseText);
-        }
-    };
-    client.send(productoJsonString);
+    if (nombre === "" || jsonText === "") {
+        alert("Todos los campos son obligatorios.");
+        return;
+    }
+
+    let producto;
+    try {
+        producto = JSON.parse(jsonText); // Convertir el texto a un objeto JSON
+    } catch (error) {
+        alert("Error en el formato JSON.");
+        return;
+    }
+
+    // Validar que el JSON tenga las claves necesarias
+    if (!producto.marca || !producto.modelo || !producto.detalles) {
+        alert("El JSON debe contener 'marca', 'modelo' y 'detalles'.");
+        return;
+    }
+
+    // Agregar el nombre del input al objeto JSON
+    producto.nombre = nombre;
+
+    // Enviar los datos al backend
+    fetch("backend/create.php", {
+        method: "POST",
+        body: JSON.stringify(producto),
+        headers: { "Content-Type": "application/json" }
+    })
+    .then(response => response.json())
+    .then(data => {
+        alert(data.mensaje); 
+    })
+    .catch(error => console.error("Error:", error));
 }
 
 // SE CREA EL OBJETO DE CONEXIÓN COMPATIBLE CON EL NAVEGADOR
