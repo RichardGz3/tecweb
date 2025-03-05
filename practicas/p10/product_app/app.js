@@ -126,20 +126,27 @@ function buscarProducto(event) {
 
     let searchValue = document.getElementById("search").value;
 
-    fetch(`backend/read.php?search=${searchValue}`)
-        .then(response => response.json())
-        .then(data => {
-            let tbody = document.getElementById("productos");
-            tbody.innerHTML = "";
-            data.forEach(producto => {
-                let row = document.createElement("tr");
-                row.innerHTML = `
-                    <td>${producto.id}</td>
-                    <td>${producto.nombre}</td>
-                    <td>${producto.detalles}</td>
-                `;
-                tbody.appendChild(row);
-            });
-        })
-        .catch(error => console.error("Error:", error));
+    fetch('backend/read.php', {
+        method: 'POST',
+        body: new URLSearchParams({ busqueda: searchValue }),
+        headers: { 'Content-Type': 'application/x-www-form-urlencoded' }
+    })
+    .then(response => response.json())
+    .then(data => {
+        let tbody = document.getElementById("productos");
+        tbody.innerHTML = "";
+
+        data.forEach(producto => {
+            let row = document.createElement("tr");
+            row.innerHTML = `
+                <td>${producto.id}</td>
+                <td>${producto.nombre}</td>
+                <td>${producto.marca}</td>
+                <td>${producto.detalles}</td>
+            `;
+            tbody.appendChild(row);
+        });
+    })
+    .catch(error => console.error("Error:", error));
 }
+
