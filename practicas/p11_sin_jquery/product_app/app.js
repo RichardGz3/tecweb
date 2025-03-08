@@ -154,16 +154,63 @@ function agregarProducto(e) {
     // SE AGREGA AL JSON EL NOMBRE DEL PRODUCTO
     finalJSON['nombre'] = document.getElementById('name').value;
     // SE OBTIENE EL STRING DEL JSON FINAL
-    productoJsonString = JSON.stringify(finalJSON,null,2);
+    productoJsonString = JSON.stringify(finalJSON, null, 2);
 
-/**
- * AQUÍ DEBES AGREGAR LAS VALIDACIONES DE LOS DATOS EN EL JSON
- * ...
- * 
- * --> EN CASO DE NO HABER ERRORES, SE ENVIAR EL PRODUCTO A AGREGAR
- */
+    // VALIDACIONES DE LOS DATOS
+    let errores = [];
 
-    // SE CREA EL OBJETO DE CONEXIÓN ASÍNCRONA AL SERVIDOR
+    // Validar que el nombre no esté vacío
+    if (!finalJSON.nombre || finalJSON.nombre.trim() === '') {
+        errores.push("El nombre del producto no puede estar vacío.");
+    }
+
+    // Validar que el precio sea un número positivo
+    if (isNaN(finalJSON.precio) || finalJSON.precio < 0) {
+        errores.push("El precio debe ser un número positivo.");
+    }
+
+    // Validar que las unidades sean un número entero positivo
+    if (!Number.isInteger(finalJSON.unidades) || finalJSON.unidades < 0) {
+        errores.push("Las unidades deben ser un número entero positivo.");
+    }
+
+    // Validar que el modelo no esté vacío
+    if (!finalJSON.modelo || finalJSON.modelo.trim() === '') {
+        errores.push("El modelo del producto no puede estar vacío.");
+    }
+
+    // Validar que la marca no esté vacía
+    if (!finalJSON.marca || finalJSON.marca.trim() === '') {
+        errores.push("La marca del producto no puede estar vacía.");
+    }
+
+    // Validar que los detalles no estén vacíos
+    if (!finalJSON.detalles || finalJSON.detalles.trim() === '') {
+        errores.push("Los detalles del producto no pueden estar vacíos.");
+    }
+
+    // Validar que la imagen tenga una extensión válida (opcional)
+    const extensionesValidas = ['.jpg', '.jpeg', '.png', '.gif'];
+    const extension = finalJSON.imagen.substring(finalJSON.imagen.lastIndexOf('.')).toLowerCase();
+    if (!extensionesValidas.includes(extension)) {
+        errores.push("La imagen debe tener una extensión válida (jpg, jpeg, png, gif).");
+    }
+
+    // SI HAY ERRORES, SE MUESTRAN Y NO SE ENVÍA EL PRODUCTO
+    if (errores.length > 0) {
+        let template_bar = '';
+        errores.forEach(error => {
+            template_bar += `<li style="list-style: none; color: red;">${error}</li>`;
+        });
+
+        // SE HACE VISIBLE LA BARRA DE ESTADO
+        document.getElementById("product-result").className = "card my-4 d-block";
+        // SE INSERTA LA PLANTILLA PARA LA BARRA DE ESTADO
+        document.getElementById("container").innerHTML = template_bar;
+        return;
+    }
+
+    // SI NO HAY ERRORES, SE ENVÍA EL PRODUCTO A AGREGAR
     var client = getXMLHttpRequest();
     client.open('POST', './backend/product-add.php', true);
     client.setRequestHeader('Content-Type', "application/json;charset=UTF-8");
@@ -173,12 +220,22 @@ function agregarProducto(e) {
             console.log(client.responseText);
             // SE OBTIENE EL OBJETO DE DATOS A PARTIR DE UN STRING JSON
             let respuesta = JSON.parse(client.responseText);
+
             // SE CREA UNA PLANTILLA PARA CREAR INFORMACIÓN DE LA BARRA DE ESTADO
             let template_bar = '';
-            template_bar += `
-                        <li style="list-style: none;">status: ${respuesta.status}</li>
-                        <li style="list-style: none;">message: ${respuesta.message}</li>
-                    `;
+
+            // SI EL PRODUCTO SE AGREGÓ CORRECTAMENTE, SE MUESTRA UN MENSAJE DE ÉXITO
+            if (respuesta.status === "success") {
+                template_bar += `
+                    <li style="list-style: none; color: green;">${respuesta.message}</li>
+                    <li style="list-style: none; color: green;">Producto agregado correctamente.</li>
+                `;
+            } else {
+                // SI HUBO UN ERROR EN EL SERVIDOR, SE MUESTRA EL MENSAJE DE ERROR
+                template_bar += `
+                    <li style="list-style: none; color: red;">${respuesta.message}</li>
+                `;
+            }
 
             // SE HACE VISIBLE LA BARRA DE ESTADO
             document.getElementById("product-result").className = "card my-4 d-block";
@@ -192,9 +249,10 @@ function agregarProducto(e) {
     client.send(productoJsonString);
 }
 
+
 // FUNCIÓN CALLBACK DE BOTÓN "Eliminar"
 function eliminarProducto() {
-    if( confirm("De verdad deseas eliinar el Producto") ) {
+    if( confirm("De verdad deseas eliminar el Producto") ) {
         var id = event.target.parentElement.parentElement.getAttribute("productId");
         //NOTA: OTRA FORMA PODRÍA SER USANDO EL NOMBRE DE LA CLASE, COMO EN LA PRÁCTICA 7
 
