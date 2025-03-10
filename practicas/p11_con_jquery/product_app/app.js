@@ -20,13 +20,52 @@ function init() {
     listarProductos();
 }
 
+// Función para listar productos
+function listarProductos() {
+    $.ajax({
+        url: './backend/product-list.php',
+        type: 'GET',
+        success: function(response) {
+            let productos = JSON.parse(response);
+            let template = '';
+
+            productos.forEach(producto => {
+                let descripcion = `
+                    <li>precio: ${producto.precio}</li>
+                    <li>unidades: ${producto.unidades}</li>
+                    <li>modelo: ${producto.modelo}</li>
+                    <li>marca: ${producto.marca}</li>
+                    <li>detalles: ${producto.detalles}</li>
+                `;
+
+                template += `
+                    <tr productId="${producto.id}">
+                        <td>${producto.id}</td>
+                        <td>${producto.nombre}</td>
+                        <td><ul>${descripcion}</ul></td>
+                        <td>
+                            <button class="product-edit btn btn-warning">Editar</button>
+                            <button class="product-delete btn btn-danger">Eliminar</button>
+                        </td>
+                    </tr>
+                `;
+            });
+
+            $('#products').html(template);
+        },
+        error: function(xhr, status, error) {
+            console.error('Error al listar productos:', error);
+        }
+    });
+}
+
 $(document).ready(function() {
     console.log('jQuery is Working');
 
     init();
     $('#product-result').hide();
 
-    // Evento para el campo de búsqueda
+    //Para el campo de búsqueda
     $('#search').keyup(function() {
         let search = $('#search').val();
         if (search) {
@@ -54,6 +93,7 @@ $(document).ready(function() {
                                 <td>${producto.nombre}</td>
                                 <td><ul>${descripcion}</ul></td>
                                 <td>
+                                    <button class="product-edit btn btn-warning">Editar</button>
                                     <button class="product-delete btn btn-danger">Eliminar</button>
                                 </td>
                             </tr>
@@ -76,43 +116,108 @@ $(document).ready(function() {
         }
     });
 
-    // Evento para el formulario de agregar producto
+    //Para editar un producto
+    $(document).on('click', '.product-edit', function() {
+        let id = $(this).closest('tr').attr('productId');
+    
+        $.ajax({
+            url: './backend/product-single.php',
+            type: 'GET',
+            data: { id: id },
+            success: function(response) {
+                let producto = JSON.parse(response);
+    
+                //Cargar los datos en el formulario
+                $('#name').val(producto.nombre);
+    
+                let productoJSON = {
+                    precio: parseFloat(producto.precio),
+                    unidades: parseInt(producto.unidades),
+                    modelo: producto.modelo,
+                    marca: producto.marca,
+                    detalles: producto.detalles,
+                    imagen: producto.imagen
+                };
+    
+                // Convertir el objeto a una cadena JSON
+                $('#description').val(JSON.stringify(productoJSON, null, 2));
+                $('#productId').val(producto.id); // Guardar el ID del producto para la edición
+            },
+            error: function(xhr, status, error) {
+                console.error('Error al obtener el producto:', error);
+            }
+        });
+    });
+
+    // Para el formulario de agregar/editar producto
     $('#product-form').submit(function(e) {
         e.preventDefault();
-
+        console.log('Formulario enviado');
+    
         // Validar el formulario antes de enviar los datos
         if (!validarFormulario()) {
+            console.log('Validación fallida');
             return; // Detener el envío si hay errores
         }
-
+    
+        console.log('Formulario válido'); 
+    
         let productoJsonString = $('#description').val();
         let finalJSON = JSON.parse(productoJsonString);
+    
+        finalJSON.precio = parseFloat(finalJSON.precio);
+        finalJSON.unidades = parseInt(finalJSON.unidades);
+    
         finalJSON['nombre'] = $('#name').val();
+    
+        let id = $('#productId').val();
+        if (id) {
+            finalJSON['id'] = id; // Agregar el ID al JSON
+        }
+    
         productoJsonString = JSON.stringify(finalJSON, null, 2);
-
+    
+        let url = id ? './backend/product-edit.php' : './backend/product-add.php'; 
+    
+        console.log('URL:', url); 
+        console.log('Datos enviados:', productoJsonString);
+    
         $.ajax({
-            url: './backend/product-add.php',
+            url: url,
             type: 'POST',
             contentType: 'application/json',
             data: productoJsonString,
             success: function(response) {
-                let respuesta = JSON.parse(response);
-
-                // Mostrar mensaje de éxito con alert
-                alert('El producto fue agregado exitosamente.');
-
-                // Mostrar el resultado en la barra de estado
-                let template_bar = `
-                    <li style="list-style: none;">status: ${respuesta.status}</li>
-                    <li style="list-style: none;">message: ${respuesta.message}</li>
-                `;
-
-                $('#product-result').show();
-                $('#container').html(template_bar);
-                listarProductos();
+                console.log('Respuesta del servidor:', response); 
+    
+                try {
+                    let respuesta = JSON.parse(response);
+    
+                    if (respuesta.status === 'success') {
+                        alert(respuesta.message);
+                    } else {
+                        alert(respuesta.message);
+                    }
+    
+                    let template_bar = `
+                        <li style="list-style: none;">status: ${respuesta.status}</li>
+                        <li style="list-style: none;">message: ${respuesta.message}</li>
+                    `;
+    
+                    $('#product-result').show();
+                    $('#container').html(template_bar);
+                    listarProductos();
+    
+                    // Limpiar el formulario después de guardar
+                    $('#product-form').trigger('reset');
+                    $('#productId').val(''); // Limpiar el ID del producto
+                } catch (e) {
+                    alert('Hubo un problema al procesar la respuesta del servidor.');
+                }
             },
             error: function(xhr, status, error) {
-                console.error('Error al agregar producto:', error);
+                console.error('Error al guardar el producto:', error);
+                alert('Hubo un problema al intentar guardar el producto.');
             }
         });
     });
@@ -153,44 +258,6 @@ $(document).ready(function() {
         }
     });
 });
-
-// Función para listar productos
-function listarProductos() {
-    $.ajax({
-        url: './backend/product-list.php',
-        type: 'GET',
-        success: function(response) {
-            let productos = JSON.parse(response);
-            let template = '';
-
-            productos.forEach(producto => {
-                let descripcion = `
-                    <li>precio: ${producto.precio}</li>
-                    <li>unidades: ${producto.unidades}</li>
-                    <li>modelo: ${producto.modelo}</li>
-                    <li>marca: ${producto.marca}</li>
-                    <li>detalles: ${producto.detalles}</li>
-                `;
-
-                template += `
-                    <tr productId="${producto.id}">
-                        <td>${producto.id}</td>
-                        <td>${producto.nombre}</td>
-                        <td><ul>${descripcion}</ul></td>
-                        <td>
-                            <button class="product-delete btn btn-danger">Eliminar</button>
-                        </td>
-                    </tr>
-                `;
-            });
-
-            $('#products').html(template);
-        },
-        error: function(xhr, status, error) {
-            console.error('Error al listar productos:', error);
-        }
-    });
-}
 
 // Función para validar el formulario
 function validarFormulario() {
@@ -243,4 +310,3 @@ function validarFormulario() {
 
     return true;
 }
-
