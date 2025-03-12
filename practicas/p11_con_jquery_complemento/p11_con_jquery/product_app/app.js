@@ -11,8 +11,8 @@ var baseJSON = {
 $(document).ready(function(){
     let edit = false;
 
-    let JsonString = JSON.stringify(baseJSON,null,2);
-    $('#description').val(JsonString);
+    // let JsonString = JSON.stringify(baseJSON,null,2);
+    // $('#description').val(JsonString);
     $('#product-result').hide();
     listarProductos();
 
@@ -132,10 +132,24 @@ $(document).ready(function(){
          * --> EN CASO DE NO HABER ERRORES, SE ENVIAR EL PRODUCTO A AGREGAR
          **/
 
-        if ($('#name').val() === '' || $('#marca').val() === '' || $('#modelo').val() === '' || $('#precio').val() === '' || $('#detalles').val() === '' || $('#unidades').val() === '' || $('#imagen').val() === '') {
-            alert('Los campos estan vacios');
+        let valido = true;
+        $('#product-form input').each(function () {
+            if ($(this).val().trim() === '') {
+                mostrarError($(this).attr('id'), 'Este campo es requerido');
+                valido = false;
+            }
+        });
+
+        // Si algún campo no es válido, detener el envío del formulario
+        if (!valido) {
+            alert('Por favor, completa todos los campos correctamente.');
             return;
         }
+
+        /*if ($('#name').val() === '' || $('#marca').val() === '' || $('#modelo').val() === '' || $('#precio').val() === '' || $('#detalles').val() === '' || $('#unidades').val() === '' || $('#imagen').val() === '') {
+            alert('Los campos estan vacios');
+            return;
+        }*/
 
         const url = edit === false ? './backend/product-add.php' : './backend/product-edit.php';
         
@@ -210,3 +224,87 @@ $(document).ready(function(){
         e.preventDefault();
     });    
 });
+
+// Función para validar el campo "Nombre"
+$('#name').on('blur', function () {
+    let nombre = $('#name').val().trim();
+    if (nombre === '') {
+        mostrarError('name', 'El nombre es requerido');
+    } else {
+        mostrarExito('name');
+    }
+});
+
+// Función para validar el campo "Marca"
+$('#marca').on('blur', function () {
+    let marca = $('#marca').val().trim();
+    if (marca === '') {
+        mostrarError('marca', 'La marca es requerida');
+    } else {
+        mostrarExito('marca');
+    }
+});
+
+// Función para validar el campo "Modelo"
+$('#modelo').on('blur', function () {
+    let modelo = $('#modelo').val().trim();
+    if (modelo === '') {
+        mostrarError('modelo', 'El modelo es requerido');
+    } else {
+        mostrarExito('modelo');
+    }
+});
+
+// Función para validar el campo "Precio"
+$('#precio').on('blur', function () {
+    let precio = $('#precio').val().trim();
+    if (precio === '') {
+        mostrarError('precio', 'El precio es requerido');
+    } else if (isNaN(precio) || parseFloat(precio) <= 0) {
+        mostrarError('precio', 'El precio debe ser un número mayor que 0');
+    } else {
+        mostrarExito('precio');
+    }
+});
+
+// Función para validar el campo "Detalles"
+$('#detalles').on('blur', function () {
+    let detalles = $('#detalles').val().trim();
+    if (detalles === '') {
+        mostrarError('detalles', 'Los detalles son requeridos');
+    } else {
+        mostrarExito('detalles');
+    }
+});
+
+// Función para validar el campo "Unidades"
+$('#unidades').on('blur', function () {
+    let unidades = $('#unidades').val().trim();
+    if (unidades === '') {
+        mostrarError('unidades', 'Las unidades son requeridas');
+    } else {
+        mostrarExito('unidades');
+    }
+});
+
+// Función para validar el campo "Imagen"
+$('#imagen').on('blur', function () {
+    let imagen = $('#imagen').val().trim();
+    if (imagen === '') {
+        mostrarError('imagen', 'La imagen es requerida');
+    } else {
+        mostrarExito('imagen');
+    }
+});
+
+// Función para mostrar un mensaje de error
+function mostrarError(campo, mensaje) {
+    $(`#${campo}`).addClass('is-invalid');
+    $(`#${campo}`).next('.invalid-feedback').text(mensaje);
+}
+
+// Función para mostrar que el campo es válido
+function mostrarExito(campo) {
+    $(`#${campo}`).removeClass('is-invalid');
+    $(`#${campo}`).addClass('is-valid');
+}
