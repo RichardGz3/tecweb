@@ -136,11 +136,11 @@ $(document).ready(function(){
         $('#product-form input').each(function () {
             if ($(this).val().trim() === '') {
                 mostrarError($(this).attr('id'), 'Este campo es requerido');
+                actualizarBarraEstado($(this).attr('id'), `${$(this).attr('id')}: Campo requerido`, false);
                 valido = false;
             }
         });
 
-        // Si algún campo no es válido, detener el envío del formulario
         if (!valido) {
             alert('Por favor, completa todos los campos correctamente.');
             return;
@@ -179,6 +179,7 @@ $(document).ready(function(){
             // SE REGRESA LA BANDERA DE EDICIÓN A false
             edit = false;
         });
+        limpiarBarraEstado();
     });
 
     $(document).on('click', '.product-delete', (e) => {
@@ -230,8 +231,10 @@ $('#name').on('blur', function () {
     let nombre = $('#name').val().trim();
     if (nombre === '') {
         mostrarError('name', 'El nombre es requerido');
+        actualizarBarraEstado('name', 'Nombre: Campo requerido', false);
     } else {
         mostrarExito('name');
+        actualizarBarraEstado('name', 'Nombre: Válido', true);
     }
 });
 
@@ -240,8 +243,10 @@ $('#marca').on('blur', function () {
     let marca = $('#marca').val().trim();
     if (marca === '') {
         mostrarError('marca', 'La marca es requerida');
+        actualizarBarraEstado('marca', 'Marca: Campo requerido', false);
     } else {
         mostrarExito('marca');
+        actualizarBarraEstado('marca', 'Marca: Válida', true);
     }
 });
 
@@ -250,8 +255,10 @@ $('#modelo').on('blur', function () {
     let modelo = $('#modelo').val().trim();
     if (modelo === '') {
         mostrarError('modelo', 'El modelo es requerido');
+        actualizarBarraEstado('modelo', 'Modelo: Campo requerido', false);
     } else {
         mostrarExito('modelo');
+        actualizarBarraEstado('modelo', 'Modelo: Válido', true);
     }
 });
 
@@ -260,10 +267,10 @@ $('#precio').on('blur', function () {
     let precio = $('#precio').val().trim();
     if (precio === '') {
         mostrarError('precio', 'El precio es requerido');
-    } else if (isNaN(precio) || parseFloat(precio) <= 0) {
-        mostrarError('precio', 'El precio debe ser un número mayor que 0');
+        actualizarBarraEstado('precio', 'Precio: Campo requerido', false);
     } else {
         mostrarExito('precio');
+        actualizarBarraEstado('precio', 'Precio: Válido', true);
     }
 });
 
@@ -272,8 +279,10 @@ $('#detalles').on('blur', function () {
     let detalles = $('#detalles').val().trim();
     if (detalles === '') {
         mostrarError('detalles', 'Los detalles son requeridos');
+        actualizarBarraEstado('detalles', 'Detalles: Campo requerido', false);
     } else {
         mostrarExito('detalles');
+        actualizarBarraEstado('detalles', 'Detalles: Válidos', true);
     }
 });
 
@@ -282,8 +291,10 @@ $('#unidades').on('blur', function () {
     let unidades = $('#unidades').val().trim();
     if (unidades === '') {
         mostrarError('unidades', 'Las unidades son requeridas');
+        actualizarBarraEstado('unidades', 'Unidades: Campo requerido', false);
     } else {
         mostrarExito('unidades');
+        actualizarBarraEstado('unidades', 'Unidades: Válidas', true);
     }
 });
 
@@ -292,8 +303,10 @@ $('#imagen').on('blur', function () {
     let imagen = $('#imagen').val().trim();
     if (imagen === '') {
         mostrarError('imagen', 'La imagen es requerida');
+        actualizarBarraEstado('imagen', 'Imagen: Campo requerido', false);
     } else {
         mostrarExito('imagen');
+        actualizarBarraEstado('imagen', 'Imagen: Válida', true);
     }
 });
 
@@ -307,4 +320,31 @@ function mostrarError(campo, mensaje) {
 function mostrarExito(campo) {
     $(`#${campo}`).removeClass('is-invalid');
     $(`#${campo}`).addClass('is-valid');
+}
+
+// Función para agregar o actualizar un mensaje en la barra de estado
+function actualizarBarraEstado(campo, mensaje, esValido) {
+    let statusBar = $('#status-bar');
+    let elemento = $(`#status-bar li[data-campo="${campo}"]`);
+
+    if (elemento.length === 0) {
+        // Si no existe, crea un nuevo elemento en la barra de estado
+        statusBar.append(`<li data-campo="${campo}">${mensaje}</li>`);
+        elemento = $(`#status-bar li[data-campo="${campo}"]`);
+    } else {
+        // Si existe, actualiza el mensaje
+        elemento.text(mensaje);
+    }
+
+    // Cambia el color del texto según si es válido o no
+    if (esValido) {
+        elemento.css('color', 'green');
+    } else {
+        elemento.css('color', 'red');
+    }
+}
+
+// Función para limpiar la barra de estado
+function limpiarBarraEstado() {
+    $('#status-bar').empty();
 }
