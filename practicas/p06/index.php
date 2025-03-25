@@ -85,7 +85,7 @@
         <button type="submit">Verificar</button>
     </form>
 
-    <h2>Ejercicio 6: Parque Vehicular</h2>
+    <h2>Ejercicio 6</h2>
     <p>Crea en código duro un arreglo asociativo que sirva para registrar el parque vehicular de una ciudad. Cada vehículo debe ser identificado por:</p>
 
     <form method="GET">
