@@ -3,12 +3,22 @@
   <head>
     <meta charset="UTF-8">
     <title>ProductApp</title>
-    <!-- BOOTSTRAP 4  -->
+    <!-- BOOTSTRAP 4 -->
     <link rel="stylesheet" href="https://bootswatch.com/4/superhero/bootstrap.min.css">
+    <style>
+      /* Estilo adicional para asegurar que los botones sean clickeables */
+      .btn {
+        cursor: pointer;
+      }
+      /* Mejor espaciado para los botones */
+      .product-actions button {
+        margin: 2px;
+      }
+    </style>
   </head>
   <body>
 
-    <!-- BARRA DE NAVEGACIÓN  -->
+    <!-- BARRA DE NAVEGACIÓN -->
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
       <a class="navbar-brand" href=".">ProductApp</a>
       <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
@@ -68,7 +78,7 @@
           </div>
         </div>
 
-        <!-- TABLA  -->
+        <!-- TABLA -->
         <div class="col-md-7">
           <div class="card my-4 d-none" id="product-result">
             <div class="card-body">
@@ -83,19 +93,39 @@
                 <td>Id</td>
                 <td>Nombre</td>
                 <td>Descripción</td>
+                <td>Acciones</td> <!-- Columna añadida para los botones -->
               </tr>
             </thead>
-            <tbody id="products"></tbody>
+            <tbody id="products">
+              <!-- Mensaje inicial -->
+              <tr>
+                <td colspan="4">Cargando productos...</td>
+              </tr>
+            </tbody>
           </table>
         </div>
       </div>
     </div>
 
-    <!-- jQuery -->
+    <!-- jQuery + Bootstrap JS -->
     <script src="https://code.jquery.com/jquery-3.7.1.min.js" 
     integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" 
     crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js"></script>
+    
     <!-- Lógica del Frontend -->
     <script src="app.js"></script>
+    
+    <!-- Script adicional para debug -->
+    <script>
+      // Debug: Verificar si los eventos se están registrando
+      $(document).on('click', '.product-delete', function() {
+        console.log('Click en eliminar detectado');
+      });
+      
+      $(document).on('click', '.product-edit', function() {
+        console.log('Click en editar detectado');
+      });
+    </script>
   </body>
 </html>

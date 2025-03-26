@@ -1,5 +1,5 @@
 <?php
-include_once __DIR__.'/database.php';
+/*include_once __DIR__.'/database.php';
 
 // SE OBTIENE LA INFORMACIÓN DEL PRODUCTO ENVIADA POR EL CLIENTE
 $producto = file_get_contents('php://input');
@@ -38,5 +38,11 @@ if (!empty($producto)) {
 }
 
 // SE HACE LA CONVERSIÓN DE ARRAY A JSON
-echo json_encode($data, JSON_PRETTY_PRINT);
+echo json_encode($data, JSON_PRETTY_PRINT);*/
+    namespace MyAPI;
+    require_once __DIR__.'./myapi/Products.php';
+
+    $producto = file_get_contents('php://input');
+    $products = new Products('marketzone');
+    echo $products->edit($producto)->getData();              
 ?>

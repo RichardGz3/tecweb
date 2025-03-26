@@ -1,5 +1,5 @@
 <?php
-include_once __DIR__.'/database.php';
+/*include_once __DIR__.'/database.php';
 
 $data = array();
 
@@ -21,5 +21,16 @@ if( isset($_GET['id']) ) {
     $conexion->close();
 } 
 
-echo json_encode($data, JSON_PRETTY_PRINT);
+echo json_encode($data, JSON_PRETTY_PRINT);*/
+
+    namespace MyAPI;
+    require_once __DIR__.'./myapi/Products.php';
+
+    $products = new Products('marketzone');
+    if(isset($_GET['id'])) {
+        echo $products->get($_GET['id'])->getData();
+    } else {
+        echo json_encode([], JSON_PRETTY_PRINT);
+    }
+
 ?>

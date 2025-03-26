@@ -1,5 +1,5 @@
 <?php
-    include_once __DIR__.'/database.php';
+    /*include_once __DIR__.'/database.php';
 
     // SE CREA EL ARREGLO QUE SE VA A DEVOLVER EN FORMA DE JSON
     $data = array();
@@ -28,5 +28,34 @@
     } 
     
     // SE HACE LA CONVERSIÓN DE ARRAY A JSON
-    echo json_encode($data, JSON_PRETTY_PRINT);
+    echo json_encode($data, JSON_PRETTY_PRINT);*/
+        
+    include_once __DIR__ . '/myapi/Products.php';
+
+    // Verificar si se recibió el término de búsqueda
+    if (!isset($_GET['search']) || empty(trim($_GET['search']))) {
+        echo json_encode([
+            'status' => 'error',
+            'message' => 'Término de búsqueda no proporcionado'
+        ]);
+        exit;
+    }
+
+    $search = trim($_GET['search']);
+
+    try {
+        // Realizar búsqueda
+        $product = new MyAPI\Products("marketzone");
+        $product->search($search);
+        
+        // Devolver respuesta JSON
+        header('Content-Type: application/json');
+        echo $product->getData();
+    } catch (Exception $e) {
+        echo json_encode([
+            'status' => 'error',
+            'message' => 'Error en el servidor: ' . $e->getMessage()
+        ]);
+    }
+
 ?>
