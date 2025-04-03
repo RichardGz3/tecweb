@@ -1,0 +1,15 @@
+{
+    "name": "tecweb/myapi",
+    "description": "clases y funciones",
+    "autoload": {
+        "psr-4": {
+            "Tecweb\\Myapi\\": "src/"
+        }
+    },
+    "authors": [
+        {
+            "name": "Ricardo"
+        }
+    ],
+    "require": {}
+}
