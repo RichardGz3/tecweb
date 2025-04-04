@@ -3,7 +3,7 @@
     "description": "clases y funciones",
     "autoload": {
         "psr-4": {
-            "Tecweb\\Myapi\\": "src/"
+            "myapi\\": "backend/myapi/"
         }
     },
     "authors": [

@@ -1,7 +1,7 @@
 <?php
-require_once __DIR__ . '/../vendor/autoload.php';
+require_once __DIR__.'/../vendor/autoload.php';
 
-use TECWEB\MYAPI\Delete\ProductsDelete;
+use myapi\Delete\ProductsDelete;
 
 $id = $_POST['id'] ?? null;
 $productos = new ProductsDelete('marketzone');

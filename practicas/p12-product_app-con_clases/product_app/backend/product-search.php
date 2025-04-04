@@ -1,7 +1,7 @@
 <?php
-require_once __DIR__ . '/../vendor/autoload.php';
+require_once __DIR__.'/../vendor/autoload.php';
 
-use TECWEB\MYAPI\Read\ProductsRead;
+use myapi\Read\ProductsRead;
 
 $search = $_GET['search'] ?? null;
 $productos = new ProductsRead('marketzone');
